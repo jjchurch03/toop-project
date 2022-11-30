@@ -4,56 +4,47 @@
 class CRobot{
 	String name1;
 	String name2;
-	int x, y;
-	int fwd0 = EmoroServo.write(SERVO_0, x);
-	int fwd1 = EmoroServo.write(SERVO_1, y);
+	int fwd0; //EmoroServo.write(SERVO_0, x);
+	int fwd1; //EmoroServo.write(SERVO_1, y);
 public:
 	 CRobot (String a, String b, int c, int d)
 	{
+
 		name1 = a;
 		name2 = b;
-		x = c;
-		y = d;
-
+		fwd0 = c;
+		fwd1 = d;
 	}
+
 	void fwdUntil()
 	{
-
-
-
 		 if (digitalRead(IO_0) == 0 && digitalRead(IO_1) == 0)
 		 {
 		          EmoroServo.write(SERVO_0, 1500);
 		    	  EmoroServo.write(SERVO_1, 1500);// Both sensors are on the black, stop.
-
 		 }
-
 	}
-
 
 	void turnRight()
 	{
 		Gyr.resetDegrees();
-
 			while (Gyr.readDegreesZ() < 90)
 			{
 				EmoroServo.write(SERVO_0, 1400);//this makes the robot turn right
 				EmoroServo.write(SERVO_1, 1400);
 			}
-
 	}
 
 	void turnLeft()
 	{
 		Gyr.resetDegrees();
-
 		while (Gyr.readDegreesZ() > 270 || Gyr.readDegreesZ() == 0)//counterclockwise 90 degree turn
 			{
 				EmoroServo.write(SERVO_0, 1600);//this makes the robot turn left
 				EmoroServo.write(SERVO_1, 1600);
 			}
-
 	}
+
 	void aboutFace()
 	{
 		Gyr.resetDegrees();
@@ -62,45 +53,31 @@ public:
 				EmoroServo.write(SERVO_0, 1600);//this makes the robot turn left
 				EmoroServo.write(SERVO_1, 1600);
 			}
-
 	}
+
 	void buttonPressed()
 	{
-	if (ReadSwitch(SW_2)==1) //SW_4 pressed
-		{
-		Gyr.resetDegrees();
-		EmoroServo.write(SERVO_0, 1600);
-		EmoroServo.write(SERVO_1, 1400);
-		}
-	if (ReadSwitch(SW_1)==1) //SW_4 pressed
+
+
+	if (ReadSwitch(SW_1)==1) //SW_1 pressed
 			{
 			Gyr.resetDegrees();
-			EmoroServo.write(SERVO_0, 1600);
-			EmoroServo.write(SERVO_1, 1400);
+			EmoroServo.write(SERVO_0, fwd0);
+			EmoroServo.write(SERVO_1, fwd1);
+			 Lcd.locate(0,0);
+			 Lcd.print(name1);
+			 Lcd.locate(1,0);
+			 Lcd.print(name2);
 			}
-	if (ReadSwitch(SW_3)==1) //SW_4 pressed
-			{
-			Gyr.resetDegrees();
-			EmoroServo.write(SERVO_0, 1600);
-			EmoroServo.write(SERVO_1, 1400);
-			}
-	if (ReadSwitch(SW_4)==1) //SW_4 pressed
-			{
-			Gyr.resetDegrees();
-			EmoroServo.write(SERVO_0, 1600);
-			EmoroServo.write(SERVO_1, 1400);
-			}
+
 	}
 
 
 
 
 };
-CRobot Atom("Joe Church", "Rohan Iyer", 1600, 1400);
 
-
-
-
+ CRobot Atom("Joe Church", "Rohan Iyer", 1600, 1400);
 
 void setup()
 {
@@ -112,21 +89,17 @@ void setup()
 	 pinMode(IO_1,INPUT_PULLUP );
 	 Gyr.init();
 	 Lcd.init();
-
-	 Lcd.locate(0,0);
-	 Lcd.print("Joe Church");
-	 Lcd.locate(1,0);
-	 Lcd.print("Rohan Iyer");
 	 Atom.buttonPressed();
 
 
+
 }
+
 
 // The loop function is called in an endless loop
 void loop()
 {
 //Add your repeated code here
-
 
 	Atom.fwdUntil();
 
