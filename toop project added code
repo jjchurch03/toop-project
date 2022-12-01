@@ -1,0 +1,37 @@
+#include "Arduino.h"
+//The setup function is called once at startup of the sketch
+
+
+void setup()
+{
+// Add your initialization code here
+	 InitEmoro();
+		 EmoroServo.attach(SERVO_0);
+		 EmoroServo.attach(SERVO_1);
+		 pinMode(IO_0,INPUT_PULLUP );
+		 pinMode(IO_1,INPUT_PULLUP );
+		 Gyr.init();
+		 if (ReadSwitch(SW_2)==1) //SW_2 pressed
+		 			{
+
+		 				Gyr.resetDegrees();
+		 				EmoroServo.write(SERVO_0, 1800);
+		 				EmoroServo.write(SERVO_1, 1100);
+	Lcd.print("Hello World");
+
+
+		 			}
+
+
+	}
+
+
+
+
+
+// The loop function is called in an endless loop
+void loop()
+{
+//Add your repeated code here
+
+}
